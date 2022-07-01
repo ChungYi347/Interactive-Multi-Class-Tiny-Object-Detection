@@ -1,0 +1,6 @@
+Cython
+mmcv==0.4.3
+shapely
+tqdm
+kiwisolver
+numpy==1.20.3

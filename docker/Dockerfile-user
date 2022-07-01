@@ -1,0 +1,23 @@
+ARG SRC_IMG_NAME
+FROM "$SRC_IMG_NAME"
+
+# modification of this block NOT allowed!!!
+# DON'T fill the argument variables!!!
+ARG USER_ID
+ARG USER_NAME
+ARG USER_HOME
+ARG USER_SHELL
+ARG GROUP_ID
+ARG GROUP_NAME
+RUN mkdir -p $(dirname "$USER_HOME") && \
+    groupadd -g $GROUP_ID $GROUP_NAME && \
+    useradd -g $GROUP_ID -u $USER_ID -m -d $USER_HOME -s $USER_SHELL $USER_NAME
+WORKDIR $USER_HOME
+
+# customization allowed from here
+# example: personal setup and additional installation as follows
+RUN apt-get update -y && apt-get install -y sudo vim git
+RUN echo "$USER_NAME ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+USER $USER_NAME:$GROUP_NAME
+RUN git config --global user.email "$USER_NAME@lunit.io" && \
+    git config --global user.name "$USER_NAME"
