@@ -13,12 +13,12 @@ Our approach, C3Det, relates the full image context with annotator inputs in a l
 **Note:** *This work was developed as part of work for [Lunit Inc.](https://www.lunit.io/en)*
 
 
-# Introduction
+## Introduction
 This codebase is based on [AerialDetection](https://github.com/dingjiansw101/AerialDetection).
 The master branch works with **PyTorch 1.1** or higher. If you would like to use PyTorch 0.4.1,
 please checkout the [pytorch-0.4.1](https://github.com/open-mmlab/mmdetection/tree/pytorch-0.4.1) branch.
 
-# Main Features
+## Main Features
 
 - **Tiny-DOTA dataset preparation**
 
@@ -36,8 +36,8 @@ please checkout the [pytorch-0.4.1](https://github.com/open-mmlab/mmdetection/tr
 
 
 
-# Installation
-## 1. Install and build the docker image
+## Installation
+### 1. Install and build the docker image
 ```
 cd docker
 bash build.sh ubuntu18.04-cuda9.2-cudnn7.6-python3.7-pt1.4.0
@@ -46,22 +46,22 @@ bash docker_run.sh
 
 If you need to map a local folder to the docker environment, please use the `-v` option to request the mapping during `docker run`. (e.g., `-v /system/dir:/in/docker/dir`)
 
-## 2. Enter the running docker container. The ID can be retrieved using `docker ps`
+### 2. Enter the running docker container. The ID can be retrieved using `docker ps`
 ```
 docker exec -it [DOCKER CONTAINER ID] bash
 ```
 
-## 3. Install external libraries (e.g., mmdet and mmcv) with:
+### 3. Install external libraries (e.g., mmdet and mmcv) with:
 ```
 bash install.sh
 ```
 
-# Data Preparation
-## 1. Download the DOTA-v2.0 dataset
+## Data Preparation
+### 1. Download the DOTA-v2.0 dataset
 You can download DOTA-v2.0 dataset [here](https://captain-whu.github.io/DOTA/dataset.html).
 You must first download DOTA-v1.0 images, and then download the extra images and annotations of DOTA-v2.0.
 
-## 2. Split original DOTA-v2.0 dataset to make DOTA-Tiny dataset.
+### 2. Split original DOTA-v2.0 dataset to make DOTA-Tiny dataset.
 ```
 python DOTA_devkit/split_dataset_DOTA_Tiny.py --datapath ${original_datapath}
 ```
@@ -84,7 +84,7 @@ val                | val_old            | val (10%)
 ```
 However, you must contain original test folder.
 
-## 3. Split 1k x 1k size patches.
+### 3. Split 1k x 1k size patches.
 ```
 python DOTA_devkit/prepare_dota2.py --srcpath ${original_datapath} --dstpath ${patch_datapath}
 ```
@@ -92,7 +92,7 @@ python DOTA_devkit/prepare_dota2.py --srcpath ${original_datapath} --dstpath ${p
 
 > ${patch_datapath}: path of splitted DOTA-Tiny as 1k x 1k size patches
 
-## 4. Parse only tiny-objects from original DOTA classes.
+### 4. Parse only tiny-objects from original DOTA classes.
 ```
 python DOTA_devkit/parse_tiny_objects.py --datapath ${patch_datapath}
 ```
@@ -101,23 +101,23 @@ python DOTA_devkit/parse_tiny_objects.py --datapath ${patch_datapath}
 This script will parse and generate tiny-objects (e.g., `ship`, `small-vehicle`, etc.) dataset from DOTA objects.
 File names will be `DOTA2_{train1024, val1024, test1024}_tiny.json`.
 
-# Configs for DOTA-Tiny
+## Configs for DOTA-Tiny
 We wrote configuration files for Tiny-DOTA in `configs/DOTA2_Tiny` folder.
 
-# Pre-trained weights for the C3Det and baselines
+## Pre-trained weights for the C3Det and baselines
 You can obtain a copy of the pre-trained weights for C3Det and baseline methods
 ```
 TBA
 ```
 
-# Training
+## Training
 Before you try to train a model, you have to change the some line of configuration file such as model name, etc.
 ```
 bash tools/dist_train.sh configs/DOTA2_Tiny faster_rcnn_obb_r50_fpn_1x_dota2_tiny.py [NUM_OF_GPUS]
 (e.g., bash tools/dist_train.sh configs/DOTA2_Tiny/faster_rcnn_obb_r50_fpn_1x_dota2_tiny.py 8)
 ```
 
-# Testing for NoC
+## Testing for NoC
 
 ```
 bash tools/dist_test_noc.sh [CONFIGURATION_FILE_PATH] [CHECKPOINT_FILE_PATH] [NUM_OF_GPUS] --out [OUTPUT_PATH] -eval bbox
@@ -125,7 +125,7 @@ bash tools/dist_test_noc.sh [CONFIGURATION_FILE_PATH] [CHECKPOINT_FILE_PATH] [NU
 ```
 It will simulate user inputs up to 20 points for evaluating your model and drawing NoC curve.
 
-# Testing for Normal
+## Testing for Normal
 
 ```
 bash tools/dist_test.sh [CONFIGURATION_FILE_PATH] [CHECKPOINT_FILE_PATH] [NUM_OF_GPUS] --out [OUTPUT_PATH] -eval bbox
@@ -134,10 +134,10 @@ bash tools/dist_test.sh [CONFIGURATION_FILE_PATH] [CHECKPOINT_FILE_PATH] [NUM_OF
 
 It will simulate user inputs random number of user input from 0 to 20 and evaluate only once.
 
-# Results
+## Results
 See [RESULTS.md](results/RESULTS.md).
 
-# Citing
+## Citing
 
 ```
 @InProceedings{lee2022interactive,
