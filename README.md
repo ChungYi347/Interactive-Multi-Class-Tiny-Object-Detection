@@ -105,9 +105,22 @@ File names will be `DOTA2_{train1024, val1024, test1024}_tiny.json`.
 We wrote configuration files for Tiny-DOTA in `configs/DOTA2_Tiny` folder.
 
 ## Pre-trained weights for the C3Det and baselines
-You can obtain a copy of the pre-trained weights for C3Det and baseline methods
+You can obtain a copy of the pre-trained weights for C3Det and baseline methods [here](https://github.com/ChungYi347/Interactive-Multi-Class-Tiny-Object-Detection/releases/tag/checkpoints).
+You have to make sure the configuration file such as `model_name` or `user_input_loss_enable`.
+
+1. C3Det with UEL (`model_name`: `FasterRCNNOBBC3Det` and `user_input_loss_enable`: `True`)
 ```
-TBA
+bash tools/dist_test_noc.sh configs/DOTA2_Tiny/faster_rcnn_obb_r50_fpn_1x_dota2_tiny.py checkpoints/Tiny_DOTA_C3Det/Tiny_DOTA_C3Det.pth 1 --out checkpoints/Tiny_DOTA_C3Det/results.pkl --eval bbox
+```
+
+2. EarlyFusion (`model_name`: `FasterRCNNOBBEarlyFusion` and `user_input_loss_enable`: `False`)
+```
+bash tools/dist_test_noc.sh configs/DOTA2_Tiny/faster_rcnn_obb_r50_fpn_1x_dota2_tiny.py checkpoints/Tiny_DOTA_Early_Fusion/Tiny_DOTA_Early_Fusion.pth 1 --out checkpoints/Tiny_DOTA_Early_Fusion/results.pkl --eval bbox
+```
+
+3. LateFusion (`model_name`: `FasterRCNNOBBLateFusion` and `user_input_loss_enable`: `False`)
+```
+bash tools/dist_test_noc.sh configs/DOTA2_Tiny/faster_rcnn_obb_r50_fpn_1x_dota2_tiny.py checkpoints/Tiny_DOTA_Late_Fusion/Tiny_DOTA_Late_Fusion.pth 1 --out checkpoints/Tiny_DOTA_Late_Fusion/results.pkl --eval bbox
 ```
 
 ## Training
