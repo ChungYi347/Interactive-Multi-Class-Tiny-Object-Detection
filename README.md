@@ -104,6 +104,27 @@ File names will be `DOTA2_{train1024, val1024, test1024}_tiny.json`.
 ## Configs for DOTA-Tiny
 We wrote configuration files for Tiny-DOTA in `configs/DOTA2_Tiny` folder.
 
+## Changed Files
+```python
+# Configuration
+configs/DOTA2_Tiny
+
+# C3 module
+mmdet/models/C3/correlation.py
+
+# Faster R-CNN HBB and OBB models
+mmdet/models/detectors/faster_rcnn.py 
+mmdet/models/detectors/faster_rcnn_obb.py 
+
+# RetinaNet HBB and OBB models
+mmdet/models/detectors/retina.py 
+mmdet/models/detectors/retina_obb.py 
+
+# UEL (User Enforcing Loss)
+mmdet/models/rbbox_heads/convfc_rbbox_head.py (SharedFCBBoxHeadRbboxUserinput)
+mmdet.models.losses.uel.py
+```
+
 ## Pre-trained weights for the C3Det and baselines
 You can obtain a copy of the pre-trained weights for C3Det and baseline methods [here](https://github.com/ChungYi347/Interactive-Multi-Class-Tiny-Object-Detection/releases/tag/checkpoints).
 You have to make sure the configuration file such as `model_name` or `user_input_loss_enable`.
